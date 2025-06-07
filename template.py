@@ -29,7 +29,8 @@ template = [
         "templates/index.html",
         "app.py",
         "requirements.txt",
-        "logging.py"
+        "logs.py",
+        "data/"
 ]
 
 
@@ -48,11 +49,15 @@ def make_files(template : List) -> None:
         if filedir != "":
             os.makedirs(filedir,exist_ok=True)
         if (not os.path.exists(filepath)) or (os.path.getsize(filepath)==0):
-            with open(os.path.join(filedir,filename),'w') as file:
-                pass
+            try:
+                with open(os.path.join(filedir,filename),'w') as file:
+                    pass
+            except Exception as e:
+                 print(e)
         else:
-    
-            print(f"{filepath} already exists!")
+        
+                print(f"{filepath} already exists!")
+           
 
 
 
