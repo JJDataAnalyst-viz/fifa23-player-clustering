@@ -2,9 +2,15 @@ import logging
 import logging.config
 import os
 
-logger = logging.getLogger("my_app")
-def setup_logging():
- 
+# using non-root logging
+logger = logging.getLogger("data_science_project")
+
+
+def setup_logging() -> None:
+    '''
+    Dictionary for setting advanced logging file 
+    
+    '''
     logging_config = {
         "version" : 1,
         "disable_existing_loggers": False,
@@ -39,14 +45,16 @@ def setup_logging():
             "root" : {"level" : "INFO", "handlers" : ["stderr","file"]}
         }
     }
+
     logging.config.dictConfig(config=logging_config)
 
-def main() -> None:
+def logging_main() -> None:
+    '''
+    Function for check if logging is working in logs.py file
+    '''
     setup_logging()
-    logger.debug("Hello Debug here")
-    logger.info("Hello info here")
-    logger.critical("Hello criitcal here")
-    logger.error("Errorhere")
+    logger.info("Logging in Logs.py setup")
+  
 
 if __name__ == "__main__":
-    main()
+    logging_main()
