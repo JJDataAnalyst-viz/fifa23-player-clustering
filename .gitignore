@@ -1,1 +1,40 @@
+# 🐍 Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 📁 Logs and temp files
+logs/
+*.log
+
+# 📦 Virtual environments
 venv/
+env/
+.venv/
+.env/
+
+# 🧪 Test coverage and reports
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# 🛠 IDE/editor settings
+.vscode/
+.idea/
+*.swp
+*~
+
+# 📦 Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+
+# 💻 OS-specific files
+.DS_Store
+Thumbs.db
