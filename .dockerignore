@@ -1,0 +1,54 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.so
+*.ipynb_checkpoints/
+
+# Jupyter Notebook metadata
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.conda/
+*.egg-info/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dataset files
+*.csv
+*.tsv
+*.data
+*.dat
+*.npy
+*.npz
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+*.ckpt
+
+# Model outputs or logs
+logs/
+*.log
+*.out
+
+# Environment and configuration
+.env
+*.yaml
+*.yml
+
+
+
+# Git
+.git/
+.gitignore
+
+# Other project-specific temp files
+*.tmp
+*.bak
+*.swp

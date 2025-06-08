@@ -30,7 +30,9 @@ template = [
         "app.py",
         "requirements.txt",
         "logs.py",
-        "data/"
+        "data/",
+        ".flaskenv",
+        ".dockerignore"
 ]
 
 
