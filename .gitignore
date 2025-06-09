@@ -38,3 +38,6 @@ dist/
 # 💻 OS-specific files
 .DS_Store
 Thumbs.db
+
+# Data files for DVC
+data/
