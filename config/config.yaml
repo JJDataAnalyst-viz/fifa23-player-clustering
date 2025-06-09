@@ -1,4 +1,3 @@
-data_ingestion:
-  root : 
+data_ingestion: 
   source_URL : bryanb/fifa-player-stats-database
   local_data_file : C:/Users/HP/.cache/kagglehub/datasets/bryanb/fifa-player-stats-database/versions/35
