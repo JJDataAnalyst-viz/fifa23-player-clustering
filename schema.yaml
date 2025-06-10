@@ -1,0 +1,14 @@
+COLUMNS :
+  Age
+  Nationality
+  Club
+  Contract Valid Until
+  Height
+  Weight
+  Release Clause
+  month
+  year
+TARGET_COLUMN :
+  name : 
+
+

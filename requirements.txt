@@ -8,3 +8,8 @@ kagglehub[pandas-datasets]
 ipykernel
 Flask
 python-dotenv
+pyyaml
+pylint
+black
+nbqa
+xgboost

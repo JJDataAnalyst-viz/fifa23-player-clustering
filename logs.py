@@ -49,6 +49,8 @@ def setup_logging() -> None:
     logging.config.dictConfig(config=logging_config)
 
 def logging_main() -> None:
+    if not os.path.exists("logs/"):
+        os.makedirs("logs/",exist_ok=True)
     '''
     Function for check if logging is working in logs.py file
     '''
