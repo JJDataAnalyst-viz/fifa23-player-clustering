@@ -1,14 +1,14 @@
 COLUMNS :
-  Age
-  Nationality
-  Club
-  Contract Valid Until
-  Height
-  Weight
-  Release Clause
-  month
-  year
+  Age : int64
+  Nationality : int8
+  Club : int8
+  Contract Valid Until : int64
+  Height : int64
+  Weight : int64
+  Release Clause : int64
+  month : int16
+  year : int64
 TARGET_COLUMN :
-  name : 
+  name : Overall
 
 

@@ -27,7 +27,6 @@ template = [
     "schema.yaml",
     "main.py",
     "Dockerfile",
-    "setup.py",
     "research/research.ipynb",
     "templates/index.html",
     "app.py",
