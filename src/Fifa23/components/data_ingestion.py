@@ -64,7 +64,7 @@ def load_data_from_kaggle(source: Path) -> Optional[Path]:
     """
 
     try:
-        path = kagglehub.dataset_download(Path(source))
+        path = kagglehub.dataset_download(str(source))
         logger.info("Path for dataset : %s", path)
         return path
     except ConnectionError as e:
