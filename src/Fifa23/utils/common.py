@@ -12,7 +12,7 @@ try:
 except ImportError as e:
     print("Logging file was not imported correctly %s", e)
 except Exception as e:
-    print("Error found in setup_logging in data_ingestion file %s", e)
+    print("Error found in setup_logging in common file %s", e)
 
 
 def read_yaml(path: Path) -> ConfigBox:

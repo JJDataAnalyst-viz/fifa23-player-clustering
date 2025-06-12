@@ -3,14 +3,34 @@ import os
 from src.Fifa23.utils.common import read_yaml 
 from pathlib import Path
 import re
+from logs import setup_logging,logger
+
+try:
+    setup_logging()
+    logger.info("Logging setup correctly in data_transformation.py file")
+except ImportError as e:
+    print("Logging file was not imported correctly %s", e)
+except Exception as e:
+    print("Error found in setup_logging in data_transformation file %s", e)
 
 def load_data(path : Path) -> pd.DataFrame:
-    data =  pd.read_csv(path,encoding="utf-8")
-    print(data.columns)
-    return data
+    '''
+        Load a CSV file and return it as a pandas DataFrame.
 
+        Args:
+            path (Path): The file path to the CSV file.
+
+        Returns:
+            pd.DataFrame: DataFrame containing the loaded data from the CSV file.
+    '''
+    try :
+        data =  pd.read_csv(path,encoding="utf-8")
+        logger.info("Data is loaded from csv file")
+        return data
+    except FileNotFoundError as e:
+         logger.error("Path to file not found %s!",e)
 def transform_data(data : pd.DataFrame):
-
+    
     df = data[["Age",
         "Nationality",
         "Overall",
