@@ -30,7 +30,7 @@ except Exception as e:
     )
 
 
-def data_ingestion() -> None:
+def data_ingestion_files() -> None:
     """
     Run data loading from Kaggle and move the dataset into 'data/raw' folder.
 
@@ -108,4 +108,4 @@ def move_data(path: Path) -> None:
 
 
 if __name__ == "__main__":
-    data_ingestion()
+    data_ingestion_files()
