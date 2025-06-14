@@ -1,13 +1,13 @@
 COLUMNS :
-  Age : int64
-  Nationality : int8
-  Club : int8
-  Contract Valid Until : int64
-  Height : int64
-  Weight : int64
-  Release Clause : int64
-  month : int16
-  year : int64
+  Age : int16
+  Nationality : object
+  Club : object
+  Contract Valid Until : float64
+  Height : Float32
+  Weight : Float32
+  Release Clause : Float32
+  month : Float32
+  year : Float32
 TARGET_COLUMN :
   name : Overall
 

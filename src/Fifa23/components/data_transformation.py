@@ -92,12 +92,12 @@ def create_time_data(
     try:
         data[column_name_1] = pd.to_datetime(data[column_name_1])
         logger.info("Transform data type of column %s into pd.datetime", column_name_1)
-        data["month"] = data[column_name_1].dt.month
+        data["month"] = data[column_name_1].dt.month.astype("Float32")
         logger.info("Extract month from %s column", column_name_1)
-        data["year"] = data[column_name_1].dt.year
+        data["year"] = data[column_name_1].dt.year.astype("Float32")
         logger.info("Extract year from %s column", column_name_1)
         data[column_name_2] = pd.to_datetime(data[column_name_2], format="mixed")
-        data[column_name_2] = data[column_name_2].dt.year
+        data[column_name_2] = data[column_name_2].dt.year.astype("Float32")
         logger.info(
             "Transform data type of column %s into pd.datetime and extract year",
             column_name_2,
@@ -140,11 +140,11 @@ def re_replace(data: pd.DataFrame) -> pd.DataFrame:
         pd.DataFrame: A new DataFrame with cleaned 'Height', 'Weight', and 'Release Clause' columns.
     """
     try:
-        data.Height = data.Height.map(replace_char)
-        data.Weight = data.Weight.map(replace_char)
+        data.Height = data.Height.map(replace_char).astype("Float32")
+        data.Weight = data.Weight.map(replace_char).astype("Float32")
         data["Release Clause"] = data["Release Clause"].map(
             replace_char, na_action="ignore"
-        )
+        ).astype("Float32")
         logger.info("Columns are properly cleaned by regex functions")
         return data
     except (KeyError, ValueError, TypeError) as e:
