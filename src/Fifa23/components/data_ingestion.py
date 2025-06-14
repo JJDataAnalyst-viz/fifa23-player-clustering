@@ -106,6 +106,6 @@ def move_data(path: Path) -> None:
     except PermissionError as e:
         logger.error("Permission denied %s", e)
 
-
+ 
 if __name__ == "__main__":
     data_ingestion_files()
