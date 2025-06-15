@@ -1,8 +1,8 @@
 COLUMNS :
-  Age : int16
+  Age : int64
   Nationality : object
   Club : object
-  Contract Valid Until : float64
+  Contract Valid Until : Float32
   Height : Float32
   Weight : Float32
   Release Clause : Float32

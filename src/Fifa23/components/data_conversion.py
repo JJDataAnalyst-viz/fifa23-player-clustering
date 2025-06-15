@@ -1,16 +1,30 @@
 from src.Fifa23.components.data_transformation import data_transform_df
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline, make_pipeline
+from sklearn.pipeline import Pipeline,make_pipeline
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
+from logs import logger,setup_logging
 
-df = data_transform_df()
-scaler = StandardScaler()
-encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
-df_fifa_str = ["Nationality", "Club"]
-df_fifa_num = [
+
+try:
+    setup_logging()
+    logger.info("Logging setup correctly in data_conversion file")
+except ImportError as e:
+    print("Logging file was not imported correctly %s", e)
+except Exception as e:
+    print("Error found in setup_logging in data_conversion file %s", e)
+
+
+
+df = data_transform_df() # Use transformed dataset
+scaler = StandardScaler()  
+encoder = OneHotEncoder(handle_unknown="ignore", sparse_output=False) # New nationality or club will be ignored in test dataset 
+
+
+df_fifa_str = ["Nationality", "Club"] # Columuns for string pipeline
+df_fifa_num = [                       # Columns for numerical pipeline                  
     "Age",
     "Contract Valid Until",
     "Height",
@@ -20,28 +34,34 @@ df_fifa_num = [
     "year",
 ]
 
-str_pipeline = Pipeline(
-    steps=[
-        ("SimpleImputer", SimpleImputer(strategy="most_frequent")),
-        ("OneHotEncoder", encoder),
-    ]
-)
+def pipelines():
+    str_pipeline = Pipeline(
+        steps=[
+            ("SimpleImputer", SimpleImputer(strategy="most_frequent")),
+            ("OneHotEncoder", encoder),
+        ]
+    )
 
-num_pipeline = Pipeline(
-    steps=[
-        ("SimpleImputer", SimpleImputer(strategy="mean")),
-        ("StandardScaler", scaler),
-    ]
-)
+    num_pipeline = Pipeline(
+        steps=[
+            ("SimpleImputer", SimpleImputer(strategy="mean")),
+            ("StandardScaler", scaler),
+        ]
+    )
 
-col_transformer = ColumnTransformer(
-    transformers=[
-        ("str_pipeline", str_pipeline, df_fifa_str),
-        ("num_pipeline", num_pipeline, df_fifa_num),
-    ],
-    remainder="drop",
-    n_jobs=-1,
-)
+    col_transformer = ColumnTransformer(
+        transformers=[
+            ("str_pipeline", str_pipeline, df_fifa_str),
+            ("num_pipeline", num_pipeline, df_fifa_num),
+        ],
+        remainder="drop",
+        n_jobs=-1,
+    )
+
+    pipefinal = make_pipeline(col_transformer)
+    return pipefinal
+
+
 
 def create_X_y(df):
     X = df.loc[
@@ -67,12 +87,15 @@ def splitting_data(X,y):
 def splitter(not_train : bool):
 
     df = data_transform_df()
+    X,y = create_X_y(df)
     if not_train:
-        X,y = create_X_y(df)
         return X,y
-    else:
-        X_train, X_test, y_train, y_test = splitting_data(X,y)
-        return ( X_train, X_test, y_train, y_test  )
+    X_train, X_test, y_train, y_test = splitting_data(X,y)
+    col_transformer = pipelines()
+    X_train, X_test, y_train, y_test 
+    X_train_transformed = col_transformer.fit_transform(X_train)
+    X_test_transformed = col_transformer.transform(X_test)
+    return X_train_transformed,X_test_transformed
 if __name__ == "__main__":
     splitter(True)
     
