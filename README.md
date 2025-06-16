@@ -33,23 +33,23 @@ The dataset is the official FIFA 23 player statistics database from Kaggle, cont
 ---
 
 ## Project Structure
-
+```bash
 JJDataAnalyst-viz/
 ├── data/
-│   └── raw/                   # Raw downloaded dataset files
-├── models/                    # Saved model pipeline artifacts
-│   └── pipeline.joblib
-├── src/                       # Source code including data ingestion and preprocessing scripts
-├── research/                  # Exploratory data analysis and research notebooks
-├── templates/                 # Project templates for consistent structure
-├── app.py                    # Flask application for model serving (if applicable)
-├── main.py                   # Main script to run the pipeline
-├── requirements.txt          # Project dependencies
-├── Dockerfile                # Docker configuration for containerized deployment
-├── params.yaml               # Parameter configuration file
-├── README.md                 # Project overview and instructions
-└── .gitignore                # Git ignore rules
-
+│   └── raw/                 # Raw dataset files
+├── models/
+│   └── pipeline.joblib      # Trained model pipeline
+├── src/                     # Source code modules
+├── research/                # EDA & experimentation notebooks
+├── templates/               # Project scaffolding templates
+├── app.py                   # Flask API for model serving (optional)
+├── main.py                  # Main pipeline runner
+├── requirements.txt         # Project dependencies
+├── Dockerfile               # Docker config for containerization
+├── params.yaml              # Configurable parameters
+├── README.md                # Project overview & instructions
+└── .gitignore               # Files to ignore in Git
+```
 
 
 
