@@ -95,7 +95,7 @@ def splitter(not_train : bool):
     X_train, X_test, y_train, y_test 
     X_train_transformed = col_transformer.fit_transform(X_train)
     X_test_transformed = col_transformer.transform(X_test)
-    return X_train_transformed,X_test_transformed
+    return X_train_transformed,X_test_transformed,y_train,y_test
 if __name__ == "__main__":
     splitter(True)
     
