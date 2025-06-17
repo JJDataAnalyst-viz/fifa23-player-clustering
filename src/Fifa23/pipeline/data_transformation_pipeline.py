@@ -15,7 +15,7 @@ class DataTransformationPipeline():
     def __init__(self):
         pass
     def initiate_data_transformation(self):
-        data_transform_df()
+        return data_transform_df()
 
 
 
