@@ -20,6 +20,24 @@ class XgboostModel():
         self.params = read_yaml(PARAMS_FILE_PATH)["xgboost_params"]
 
     def xgboost_user(self) -> XGBRegressor:
+        """
+                Creates, trains, and saves an XGBoost Regressor model.
+
+                This method initializes an `XGBRegressor` with parameters specified in `self.params`, 
+                fits it on the training data (`self.X_train_transformed`, `self.y_train`), and performs 
+                a prediction on the test set (`self.X_test_transformed`). The trained model is then 
+                saved to the `models/model.pkl` file.
+
+                Returns
+                -------
+                XGBRegressor
+                    The trained XGBoost Regressor model.
+                
+                Raises
+                ------
+                ValueError
+                    If data validation fails via `self.validate_data.validate_data()`.
+        """
         if self.validate_data.validate_data():
             xgb = XGBRegressor(**self.params)
             xgb.fit(self.X_train_transformed,self.y_train)
