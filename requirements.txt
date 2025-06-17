@@ -5,7 +5,7 @@ seaborn
 scikit-learn
 kagglehub
 kagglehub[pandas-datasets]
-ipykernel
+ipykernel 
 Flask
 python-dotenv
 pyyaml
