@@ -6,6 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from logs import logger,setup_logging
+from src.Fifa23.utils.common import save_bin
 import numpy as np
 import pandas as pd
 
@@ -181,6 +182,7 @@ def splitter(not_train : bool):
     X_train, X_test, y_train, y_test 
     X_train_transformed = col_transformer.fit_transform(X_train)
     X_test_transformed = col_transformer.transform(X_test)
+    save_bin(col_transformer,"models/transformer.pkl")
     return X_train_transformed,X_test_transformed,y_train,y_test
 
 
