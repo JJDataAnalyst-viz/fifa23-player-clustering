@@ -37,7 +37,7 @@ def setup_logging() -> None:
                 
                 "formatter" : "detailed",
                 "filename": "logs/data.log",
-                "maxBytes": 10000,
+                "maxBytes": 100000,
                 "backupCount" : 2
             }
         },

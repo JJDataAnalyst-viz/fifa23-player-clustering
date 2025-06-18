@@ -13,3 +13,59 @@ except ImportError as e:
 except Exception as e:
     print("Error found in setup_logging in main.py file %s",e)
 
+
+STAGE_NAME = "Data Ingestion Stage"
+try :
+    logger.info(">>>>>>>>>>>>>>>>>{%s}<<<<<<<<<<<<<<",STAGE_NAME)
+    obj = DataIngestionPipeline()
+    obj.initiate_data_ingestion()
+    logger.info(">>>>>>>>>>>>>>>> STAGE {%s} COMPLETED <<<<<<<<<<<<<<<<",STAGE_NAME)
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+
+STAGE_NAME = "Data Transformation Stage"
+
+try:
+    logger.info(">>>>>>>>>>>>>>>>>{%s}<<<<<<<<<<<<<<",STAGE_NAME)
+    obj = DataTransformationPipeline()
+    clean_df = obj.initiate_data_transformation()
+    logger.info(">>>>>>>>>>>>>>>> STAGE {%s} COMPLETED <<<<<<<<<<<<<<<<",STAGE_NAME)
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+STAGE_NAME = "Data Conversion Stage"
+
+try:
+    logger.info(">>>>>>>>>>>>>>>>>{%s}<<<<<<<<<<<<<<",STAGE_NAME)
+    obj = DataConversionPipeline()
+    X_train_transformed,X_test_transformed,y_train,y_test = obj.initiate_data_conversion()
+    logger.info(">>>>>>>>>>>>>>>> STAGE {%s} COMPLETED <<<<<<<<<<<<<<<<",STAGE_NAME)
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+
+STAGE_NAME = "Data Validation Stage"
+
+try:
+    logger.info(">>>>>>>>>>>>>>>>>{%s}<<<<<<<<<<<<<<",STAGE_NAME)
+    obj = DataValidationPipeline()
+    obj.initiate_data_validation()
+    logger.info(">>>>>>>>>>>>>>>> STAGE {%s} COMPLETED <<<<<<<<<<<<<<<<",STAGE_NAME)
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+STAGE_NAME = "Data Modeling Stage"
+
+try:
+    logger.info(">>>>>>>>>>>>>>>>>{%s}<<<<<<<<<<<<<<",STAGE_NAME)
+    obj = DataModelingPipeline()
+    xgb = obj.initiate_data_modeling()
+    logger.info(">>>>>>>>>>>>>>>> STAGE {%s} COMPLETED <<<<<<<<<<<<<<<<",STAGE_NAME)
+except Exception as e:
+    logger.exception(e)
+    raise e
