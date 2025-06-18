@@ -4,6 +4,7 @@ from src.Fifa23.components.data_conversion import splitter
 from src.Fifa23.components.data_validation import Validator
 from xgboost import XGBRegressor
 from src.Fifa23.constants import PARAMS_FILE_PATH
+import wandb
 
 try:
     setup_logging()
@@ -18,6 +19,13 @@ class XgboostModel():
         self.X_train_transformed,self.X_test_transformed,self.y_train,self.y_test = splitter(False)
         self.validate_data = Validator()
         self.params = read_yaml(PARAMS_FILE_PATH)["xgboost_params"]
+
+        self.run = wandb.init(
+            project="Fifa23_Xgboost",
+            entity="sciopsengineer-iqfm",
+            config=self.params
+            
+        )
 
     def xgboost_user(self) -> XGBRegressor:
         """
@@ -48,8 +56,8 @@ class XgboostModel():
         
     def model_score(self,model,X_test,y_test):
         if XgboostModel.xgboost_user is not None:
-            print(model.score(X_test,y_test))
-
+            self.run.log({"xgboost_score":model.score(X_test,y_test)})
+            
 
 
 if __name__ == "__main__":

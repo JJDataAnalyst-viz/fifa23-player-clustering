@@ -6,6 +6,7 @@ __pycache__/
 # 📁 Logs and temp files
 logs/
 *.log
+wandb/
 
 # 📦 Virtual environments
 venv/
