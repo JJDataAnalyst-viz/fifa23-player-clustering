@@ -1,114 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Player Rating Prediction</title>
-<link rel="stylesheet" href="static/css/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Player Rating Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <style>
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: #00ffae;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 1em auto;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .result {
+      margin-top: 2rem;
+      padding: 1.2rem 1.5rem;
+      border-radius: 10px;
+      background-color: #222;
+      box-shadow: inset 0 0 10px #00ffae44;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #00ffae;
+      text-align: center;
+      min-height: 40px;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h2>Predict Player Overall Rating</h2>
-  <form id="predictionForm" method="POST" action="/predict" novalidate>
-    
-    <div class="form-group">
-      <label for="age">Age <span class="required">*</span></label>
-      <input type="number" id="age" name="age" min="16" max="50" required placeholder="e.g. 27" />
-    </div>
+  <div class="container">
+    <h2>Predict Player Overall Rating</h2>
+    <form id="predictionForm" method="POST" novalidate>
+      <div class="form-group">
+        <label for="age">Age <span class="required">*</span></label>
+        <input type="number" id="age" name="age" min="16" max="50" required placeholder="e.g. 27" />
+      </div>
 
-    <div class="form-group">
-      <label for="nationality">Nationality <span class="required">*</span></label>
-      <select id="nationality" name="nationality" required>
-        <option value="" disabled selected>Select nationality</option>
-        <option value="Poland">Poland</option>
-        <option value="Germany">Germany</option>
-        <option value="Portugal">Portugal</option>
-        
-      </select>
-    </div>
+      <div class="form-group">
+        <label for="nationality">Nationality <span class="required">*</span></label>
+        <select id="nationality" name="nationality" required>
+          <option value="" disabled selected>Select nationality</option>
+          {% for country in nationalities %}
+          <option value="{{ country }}">{{ country }}</option>
+          {% endfor %}
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label for="club">Club</label>
-      <input type="text" id="club" name="club" placeholder="Enter club name" />
-    </div>
+       <div class="form-group">
+        <label for="club">Club</label>
+        <select id="club" name="club" required>
+          <option value="" disabled selected>Select club</option>
+          {% for club in clubs %}
+          <option value="{{ club }}">{{ club }}</option>
+          {% endfor %}
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label for="contract">Contract Valid Until</label>
-      <input type="number" id="contract" name="contract" min="2024" max="2030" placeholder="e.g. 2026" />
-    </div>
 
-    <div class="form-group">
-      <label for="height">Height (cm)</label>
-      <input type="number" id="height" name="height" min="150" max="210" placeholder="e.g. 180" />
-    </div>
+      <div class="form-group">
+        <label for="contract">Contract Valid Until</label>
+        <input type="number" id="contract" name="contract" min="2024" max="2030" placeholder="e.g. 2026" />
+      </div>
 
-    <div class="form-group">
-      <label for="weight">Weight (kg)</label>
-      <input type="number" id="weight" name="weight" min="50" max="120" placeholder="e.g. 75" />
-    </div>
+      <div class="form-group">
+        <label for="height">Height (cm)</label>
+        <input type="number" id="height" name="height" min="150" max="210" placeholder="e.g. 180" />
+      </div>
 
-    <div class="form-group">
-      <label for="release">Release Clause (€)</label>
-      <input type="number" id="release" name="release" min="0" placeholder="e.g. 50000000" />
-    </div>
+      <div class="form-group">
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" name="weight" min="50" max="120" placeholder="e.g. 75" />
+      </div>
 
-    <div class="form-group">
-      <label for="month">Joining Month</label>
-      <input type="number" id="month" name="month" min="1" max="12" placeholder="e.g. 7" />
-    </div>
+      <div class="form-group">
+        <label for="release">Release Clause (€)</label>
+        <input type="number" id="release" name="release" min="0" placeholder="e.g. 50000000" />
+      </div>
 
-    <div class="form-group">
-      <label for="year">Joining Year</label>
-      <input type="number" id="year" name="year" min="2000" max="2030" placeholder="e.g. 2018" />
-    </div>
+      <div class="form-group">
+        <label for="month">Joining Month</label>
+        <input type="number" id="month" name="month" min="1" max="12" placeholder="e.g. 7" />
+      </div>
 
-    <div class="form-group full-width">
-      <button type="submit">Predict Overall Rating</button>
-    </div>
-    
-  </form>
+      <div class="form-group">
+        <label for="year">Joining Year</label>
+        <input type="number" id="year" name="year" min="2000" max="2030" placeholder="e.g. 2018" />
+      </div>
 
-  <div class="result" id="predictionResult"></div>
-</div>
+      <div class="form-group full-width">
+        <button type="submit">Predict Overall Rating</button>
+      </div>
+    </form>
 
-<script>
-  const form = document.getElementById('predictionForm');
-  const resultDiv = document.getElementById('predictionResult');
+    <div class="result" id="predictionResult"></div>
+  </div>
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  <script>
+    const form = document.getElementById('predictionForm');
+    const resultDiv = document.getElementById('predictionResult');
 
-    resultDiv.textContent = '';
-    const spinner = document.createElement('div');
-    spinner.className = 'spinner';
-    resultDiv.appendChild(spinner);
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    const formData = new FormData(form);
-    const payload = {};
-    formData.forEach((value, key) => {
-      payload[key] = value.trim();
+      resultDiv.textContent = '';
+      const spinner = document.createElement('div');
+      spinner.className = 'spinner';
+      resultDiv.appendChild(spinner);
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.prediction !== undefined) {
+          resultDiv.innerHTML = `Predicted Overall Rating: <strong>${result.prediction.toFixed(2)}</strong>`;
+          resultDiv.style.color = '#00ffae';
+        } else if(result.error) {
+          throw new Error(result.error);
+        } else {
+          throw new Error('Invalid response from server.');
+        }
+
+      } catch (error) {
+        resultDiv.textContent = 'Prediction failed. Please try again.';
+        resultDiv.style.color = '#ff6666';
+        console.error('Prediction error:', error);
+      }
     });
-
-    try {
-
-      await new Promise(res => setTimeout(res, 1500));
-      const predictedRating = (Math.random() * 40 + 60).toFixed(2);
-
-      resultDiv.textContent = `Predicted Overall Rating: ${predictedRating}`;
-      resultDiv.style.color = '#00ffae';
-    } catch (error) {
-      resultDiv.textContent = 'Prediction failed. Please try again.';
-      resultDiv.style.color = '#ff6666';
-      console.error(error);
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
-<!--
-  The frontend of this player rating prediction tool was implemented with assistance from ChatGPT, 
-  leveraging AI-powered code generation to complement domain expertise in data science. 
-  While the core model and data analysis were developed by the author SciOpsEngineer. 
-  Web interface and user interaction components were scaffolded using AI support 
-  to accelerate deployment and improve user experience.
--->
